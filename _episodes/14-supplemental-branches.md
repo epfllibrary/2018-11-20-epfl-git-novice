@@ -7,8 +7,9 @@ questions:
 objectives:
 - "Understand how to use branches with Git"
 keypoints:
-- "Create branches"
-- "Merge branches"
+- "`git branch` Create branches"
+- "`git checkout` Work in the branche"
+- "`git merge` Merge branches"
 ---
 In very simple terms, git branches are individual projects within a git repository. Different branches within a repository can have completely different files and folders, or it could have everything the same except for some lines of code in a file.
 
@@ -24,3 +25,39 @@ Let’s use a few real world examples (at least that I’ve used before, others 
 {: .callout}
 
 When you merge two branches together, the commit histories get merged together as well. Which means that all the changes you made in each branch gets combined back into a single lineage, rather than two. This makes it easier to work collaboratively on a project, since each individual could work on their own branches, without dealing with the messiness that could come from working all on one branch.
+
+
+## Let's start
+
+Our `mars.txt` file
+~~~
+$ cat mars.txt
+~~~
+{: .language-bash}
+~~~
+Cold and dry, but everything is my favorite color
+The two moons may be a problem for Wolfman
+But the Mummy will appreciate the lack of humidity
+An ill-considered change
+~~~
+{: .output}
+
+Create a new branche named `rocket`
+~~~
+$ git branch rocket
+~~~
+{: .language-bash}
+
+So far nothing really appends :
+~~~
+$ git status
+~~~
+{: .language-bash}
+~~~
+On branch master
+nothing to commit, working tree clean
+~~~
+{: .output}
+
+We need to change the branche 
+
