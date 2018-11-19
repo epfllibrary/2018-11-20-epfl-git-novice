@@ -8,8 +8,9 @@ objectives:
 - "Understand how to use branches with Git"
 keypoints:
 - "`git branch` Create branches"
-- "`git checkout` Work in the branche"
+- "`git checkout` Change the branche"
 - "`git merge` Merge branches"
+- "`git show-branch` Display branches"
 ---
 In very simple terms, git branches are individual projects within a git repository. Different branches within a repository can have completely different files and folders, or it could have everything the same except for some lines of code in a file.
 
@@ -27,7 +28,7 @@ Let’s use a few real world examples (at least that I’ve used before, others 
 When you merge two branches together, the commit histories get merged together as well. Which means that all the changes you made in each branch gets combined back into a single lineage, rather than two. This makes it easier to work collaboratively on a project, since each individual could work on their own branches, without dealing with the messiness that could come from working all on one branch.
 
 
-## Let's start
+## Let's start : Create a new branch
 
 Our `mars.txt` file
 ~~~
@@ -59,5 +60,138 @@ nothing to commit, working tree clean
 ~~~
 {: .output}
 
-We need to change the branche 
+We need to change the branch
+~~~
+$ git checkout rocket
+~~~
+{: .language-bash}
+~~~
+Switched to branch 'rocket'
+~~~
+{: .output}
+
+We can edit the `mars.txt` file and add something about the rocket project
+~~~
+$ nano mars.txt
+$ cat mars.txt
+~~~
+{: .language-bash}
+~~~
+Cold and dry, but everything is my favorite color
+The two moons may be a problem for Wolfman
+But the Mummy will appreciate the lack of humidity
+An ill-considered change
+
+
+The project of rocket will need a spaceship and a motor
+Father might have the budget for it
+We need to also to move material and animals
+~~~
+{: .output}
+
+
+
+Then we add and commit changes
+~~~
+$ git status
+~~~
+{: .language-bash}
+~~~
+On branch rocket
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	modified:   mars.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+~~~
+{: .output}
+
+~~~
+$ git add mars.txt
+$ git commit -m "start the rocket project"
+~~~
+{: .language-bash}
+~~~
+[rocket 468dd5c] start the rocket project
+ 1 file changed, 6 insertions(+)
+~~~
+{: .output}
+
+This modification only affected the `rocket` branch if we go back to the `master` branch the `mars.txt` file is unchanged.
+~~~
+$ git checkout master
+$ cat mars.txt
+~~~
+{: .language-bash}
+~~~
+Cold and dry, but everything is my favorite color
+The two moons may be a problem for Wolfman
+But the Mummy will appreciate the lack of humidity
+An ill-considered change
+~~~
+{: .output}
+
+Branches are useful tools for working on different version of a project and to switch back and forth to it.
+
+## Merging branche
+
+Merging branches means to include the change of one branch to another.
+
+We go to the destination branch (`master`here)
+~~~
+$ git checkout master
+~~~
+{: .language-bash}
+~~~
+Switched to branch 'master'
+~~~
+{: .output}
+
+And we merche `rocket`branch into it
+~~~
+$ git merge rocket
+~~~
+{: .language-bash}
+~~~
+Updating dbd9912..468dd5c
+Fast-forward
+ mars.txt | 6 ++++++
+ 1 file changed, 6 insertions(+)
+ ~~~
+{: .output}
+
+`mars.txt` changed 
+
+~~~
+$ cat mars.txt
+~~~
+{: .language-bash}
+~~~
+Cold and dry, but everything is my favorite color
+The two moons may be a problem for Wolfman
+But the Mummy will appreciate the lack of humidity
+An ill-considered change
+
+
+The project of rocket will need a spaceship and a motor
+Father might have the budget for it
+We need to also to move material and animals
+~~~
+{: .output}
+
+
+you can delete the `rocker`branch
+
+~~~
+$ git branch -D rocket
+~~~
+{: .language-bash}
+~~~
+Deleted branch rocket (was 468dd5c).
+~~~
+{: .output}
+
+
 
