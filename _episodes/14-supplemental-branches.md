@@ -135,7 +135,7 @@ An ill-considered change
 
 Branches are useful tools for working on different version of a project and to switch back and forth to it.
 
-## Merging branche
+## Merging branche
 
 Merging branches means to include the change of one branch to another.
 
