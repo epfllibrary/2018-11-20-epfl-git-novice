@@ -7,21 +7,21 @@ questions:
 objectives:
 - "Understand how to use branches with Git"
 keypoints:
-- "`git branch` Create branches"
-- "`git checkout` Change the branche"
-- "`git merge` Merge branches"
-- "`git show-branch` Display branches"
+- "`git branch` create branches"
+- "`git checkout` change the branche"
+- "`git merge` merge branches"
+- "`git show-branch` display branches"
 ---
 In very simple terms, git branches are individual projects within a git repository. Different branches within a repository can have completely different files and folders, or it could have everything the same except for some lines of code in a file.
 
 Let’s use a few real world examples (at least that I’ve used before, others may have used them differently):
 
-* Pretend you submitted a research article to a journal and they want you to revise it based on some reviewers comments. There are several ways to deal with the comments, so instead of changing your main manuscript, you create a revision branch in your manuscript git repository. In that branch you make the changes to your manuscript in response to the reviewers. Once you are satisfied, you merge the branch into the master branch and resubmit the article.
+* Pretend you have submitted a research article to a journal and they want you to revise it based on some reviewers comments. There are several ways to deal with the comments, so instead of changing your main manuscript, you create a revision branch in your manuscript git repository. In that branch you make the changes to your manuscript in response to the reviewers. Once you are satisfied, you merge the branch into the master branch and resubmit the article.
 * Imagine you have a dataset that multiple people work off of but that is also often updated with more data. You think you found a problem with the dataset, but aren’t sure. So you create a new branch fixing to fix the problems without messing with the master dataset. After you confirm the problem is real and that you have the solution, you submit a pull request of the fixing branch to be merged with the master branch.
-* What is often the case in software development, a bug or missing feature in the software gets identified. Because the software is already in production use (fairly stable, other people rely on it, etc), you can’t just make changes to the main software code. So a hotfix or feature branch is created to address these problems, which will eventually get merged in with the master branch for the next version of the software. This ensures that other people’s code isn’t broken everytime a bug gets fixed.
+* What is often the case in software development, a bug or a missing feature in the software is identified. Because the software is already in production use (fairly stable, other people rely on it, etc), you can’t just make changes to the main software code. So a hotfix or feature branch is created to address these problems, which will eventually get merged in with the master branch for the next version of the software. This ensures that other people’s code isn’t broken everytime a bug gets fixed.
 
 > ## How it works
-> The nice (and very powerful) thing about Git is the fact that branches are very cheap compared to other version control systems. By cheap, I mean they don’t take up much disk space, it’s computationally easy to move between branches, and it’s (relatively) easy to merge branches together. This is because of how Git represents branches, since they are simply pointers or an individual commit. That’s it. Just a pointer… Git commit history is a directed acyclic graph, which means that every single commit always has a ‘parent’ commit (the previous commit in the history, or multiple parents when a merge happens), and any individual commit can have multiple ‘children’. 
+> The nice (and very powerful) thing about Git is the fact that branches are very cheap compared to other version control systems. By cheap, I mean they don’t take up much disk space, it’s computationally easy to move between branches, and it’s (relatively) easy to merge branches together. This is because of how Git represents branches, since they are simply pointers or an individual commit. That’s it. Just a pointer. Git commit history is a directed acyclic graph, which means that every single commit always has a ‘parent’ commit (the previous commit in the history, or multiple parents when a merge happens), and any individual commit can have multiple ‘children’. 
 > This history can be traced back through the ‘lineage’ or ‘ancestry’. The branch just gives a name to each ‘lineage’ when a commit has multiple children.
 {: .callout}
 
