@@ -1,0 +1,68 @@
+I"�<h2 id="git-cheatsheets-for-quick-reference">Git Cheatsheets for Quick Reference</h2>
+
+<ul>
+  <li>A great <a href="https://services.github.com/on-demand/downloads/github-git-cheat-sheet.pdf">printable Git cheatsheet</a> is available in PDF from the
+<a href="https://services.github.com/resources/">GitHub training website</a>.</li>
+  <li>An <a href="http://ndpsoftware.com/git-cheatsheet.html">interactive one-page visualisation</a>
+about the relationships between workspace, staging area, local repository, upstream repository, and the commands associated with each (with explanations).</li>
+  <li>Both resources are also available in other languages (e.g. Spanish, French, and more).</li>
+  <li>“<a href="http://happygitwithr.com">Happy Git and GitHub for the useR</a>” is an accessible, free online book by Jenny Bryan on how to setup and use Git and GitHub with specific references on the integration of Git with RStudio and working with Git in R.</li>
+  <li><a href="https://open-source-for-researchers.github.io/open-source-workshop/">Open Scientific Code using Git and GitHub</a> - A collection of explanations and short practical exercises to help researchers learn more about version control and open source software.</li>
+</ul>
+
+<h2 id="glossary">Glossary</h2>
+
+<dl>
+  <dt id="changeset">changeset</dt>
+  <dd>A group of changes to one or more files that are or will be added
+to a single <a href="#commit">commit</a> in a <a href="#version-control">version control</a>
+<a href="#repository">repository</a>.</dd>
+  <dt id="commit">commit</dt>
+  <dd>To record the current state of a set of files (a <a href="#changeset">changeset</a>)
+in a <a href="#version-control">version control</a> <a href="#repository">repository</a>. As a noun,
+the result of committing, i.e. a recorded changeset in a repository.
+If a commit contains changes to multiple files,
+all of the changes are recorded together.</dd>
+  <dt id="conflict">conflict</dt>
+  <dd>A change made by one user of a <a href="#version-control">version control system</a>
+that is incompatible with changes made by other users.
+Helping users <a href="#resolve">resolve</a> conflicts
+is one of version control’s major tasks.</dd>
+  <dt id="http">HTTP</dt>
+  <dd>The Hypertext Transfer <a href="#protocol">Protocol</a> used for sharing web pages and other data
+on the World Wide Web.</dd>
+  <dt id="merge">merge</dt>
+  <dd>(a repository): To reconcile two sets of changes to a
+<a href="#repository">repository</a>.</dd>
+  <dt id="protocol">protocol</dt>
+  <dd>A set of rules that define how one computer communicates with another.
+Common protocols on the Internet include <a href="#http">HTTP</a> and <a href="#ssh">SSH</a>.</dd>
+  <dt id="remote">remote</dt>
+  <dd>(of a repository) A version control <a href="#repository">repository</a> connected to another,
+in such way that both can be kept in sync exchanging <a href="#commit">commits</a>.</dd>
+  <dt id="repository">repository</dt>
+  <dd>A storage area where a <a href="#version-control">version control</a> system
+stores the full history of <a href="#commit">commits</a> of a project and information
+about who changed what, when.</dd>
+  <dt id="resolve">resolve</dt>
+  <dd>To eliminate the <a href="#conflict">conflicts</a> between two or more incompatible changes to a file or set of files
+being managed by a <a href="#version-control">version control</a> system.</dd>
+  <dt id="revision">revision</dt>
+  <dd>A synonym for <a href="#commit">commit</a>.</dd>
+  <dt id="sha-1">SHA-1</dt>
+  <dd><a href="https://en.wikipedia.org/wiki/SHA-1">SHA-1 hashes</a> is what Git uses to compute identifiers, including for commits.
+To compute these, Git uses not only the actual change of a commit, but also its metadata (such as date, author,
+message), including the identifiers of all commits of preceding changes. This makes Git commit IDs virtually unique.
+I.e., the likelihood that two commits made independently, even of the same change, receive the same ID is exceedingly
+small.</dd>
+  <dt id="ssh">SSH</dt>
+  <dd>The Secure Shell <a href="#protocol">protocol</a> used for secure communication between computers.</dd>
+  <dt id="timestamp">timestamp</dt>
+  <dd>A record of when a particular event occurred.</dd>
+  <dt id="version-control">version control</dt>
+  <dd>A tool for managing changes to a set of files.
+Each set of changes creates a new <a href="#commit">commit</a> of the files;
+the version control system allows users to recover old commits reliably,
+and helps manage conflicting changes made by different users.</dd>
+</dl>
+:ET

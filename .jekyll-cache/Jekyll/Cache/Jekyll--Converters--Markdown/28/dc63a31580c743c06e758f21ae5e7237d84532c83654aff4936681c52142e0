@@ -1,0 +1,124 @@
+I"�<h2 id="open-science">Open science</h2>
+
+<p>Free sharing of information might be the ideal in science,
+but the reality is often more complicated.
+With open publication the process might like this:</p>
+
+<ul>
+  <li>The data that the scientist collects is stored in an open access repository
+like <a href="https://figshare.com/">figshare</a> or
+<a href="https://zenodo.org">Zenodo</a>, possibly as soon as it’s collected,
+and given its own
+<a href="https://en.wikipedia.org/wiki/Digital_object_identifier">Digital Object Identifier</a> (DOI).
+Or the data was already published and is stored in
+<a href="https://datadryad.org/">Dryad</a>.</li>
+  <li>The scientist creates a new repository on GitHub to hold her work.</li>
+  <li>As she does her analysis,
+she pushes changes to her scripts
+(and possibly some output files)
+to that repository.
+She also uses the repository for her paper;
+that repository is then the hub for collaboration with her colleagues.</li>
+  <li>When she’s happy with the state of her paper,
+she posts a version to <a href="https://arxiv.org/">arXiv</a>
+or some other preprint server
+to invite feedback from peers.</li>
+  <li>Based on that feedback,
+she may post several revisions
+before finally submitting her paper to a journal.</li>
+  <li>The published paper includes links to her preprint
+and to her code and data repositories,
+which  makes it much easier for other scientists
+to use her work as starting point for their own research.</li>
+</ul>
+
+<h2 id="license">License</h2>
+
+<p>When a repository with source code, a manuscript or other creative
+works becomes public, it should include a file <code class="highlighter-rouge">LICENSE</code> or
+<code class="highlighter-rouge">LICENSE.txt</code> in the base directory of the repository that clearly
+states under which license the content is being made available. This
+is because creative works are automatically eligible for intellectual
+property (and thus copyright) protection. Reusing creative works
+without a license is dangerous, because the copyright holders could
+sue you for copyright infringement.</p>
+
+<p>A license solves this problem by granting rights to others (the
+licensees) that they would otherwise not have. What rights are being
+granted under which conditions differs, often only slightly, from one
+license to another. In practice, a few licenses are by far the most
+popular, and <a href="https://choosealicense.com/">choosealicense.com</a> will
+help you find a common license that suits your needs.  Important
+considerations include:</p>
+
+<ul>
+  <li>Whether you want to address patent rights.</li>
+  <li>Whether you require people distributing derivative works to also
+distribute their source code.</li>
+  <li>Whether the content you are licensing is source code.</li>
+  <li>Whether you want to license the code at all.</li>
+</ul>
+
+<p>Choosing a license that is in common use makes life easier for
+contributors and users, because they are more likely to already be
+familiar with the license and don’t have to wade through a bunch of
+jargon to decide if they’re ok with it.  The <a href="https://opensource.org/licenses">Open Source
+Initiative</a> and <a href="https://www.gnu.org/licenses/license-list.html">Free Software
+Foundation</a> both
+maintain lists of licenses which are good choices.</p>
+
+<p>At the end of the day what matters is that there is a clear statement
+as to what the license is. Also, the license is best chosen from the
+get-go, even if for a repository that is not public. Pushing off the
+decision only makes it more complicated later, because each time a new
+collaborator starts contributing, they, too, hold copyright and will
+thus need to be asked for approval once a license is chosen.</p>
+
+<h2 id="citation">Citation</h2>
+
+<p>You may want to include a file called <code class="highlighter-rouge">CITATION</code> or <code class="highlighter-rouge">CITATION.txt</code>
+that describes how to reference your project;
+the <a href="https://github.com/swcarpentry/website/blob/gh-pages/CITATION">one for Software
+Carpentry</a>
+states:</p>
+
+<div class="source highlighter-rouge"><div class="highlight"><pre class="highlight"><code>To reference Software Carpentry in publications, please cite both of the following:
+
+Greg Wilson: "Software Carpentry: Getting Scientists to Write Better
+Code by Making Them More Productive".  Computing in Science &amp;
+Engineering, Nov-Dec 2006.
+
+Greg Wilson: "Software Carpentry: Lessons Learned". arXiv:1307.5448,
+July 2013.
+
+@article{wilson-software-carpentry-2006,
+    author =  {Greg Wilson},
+    title =   {Software Carpentry: Getting Scientists to Write Better Code by Making Them More Productive},
+    journal = {Computing in Science \&amp; Engineering},
+    month =   {November--December},
+    year =    {2006},
+}
+
+@online{wilson-software-carpentry-2013,
+  author      = {Greg Wilson},
+  title       = {Software Carpentry: Lessons Learned},
+  version     = {1},
+  date        = {2013-07-20},
+  eprinttype  = {arxiv},
+  eprint      = {1307.5448}
+}
+</code></pre></div></div>
+
+<p>More detailed advice, and other ways to make your code citable can be found
+<a href="https://www.software.ac.uk/how-cite-and-describe-software">at the Software Sustainability Institute blog</a> and in:</p>
+
+<blockquote>
+  <p>Smith AM, Katz DS, Niemeyer KE, FORCE11 Software Citation Working Group.
+ (2016) Software citation principles. <a href="https://peerj.com/articles/cs-86/">PeerJ Computer Science 2:e86</a> https://doi.org/10.7717/peerj-cs.86</p>
+</blockquote>
+
+<p>There is also an <a href="https://www.google.de/search?q=git+citation+%22%40software%7B%22"><code class="highlighter-rouge">@software{…</code></a>
+<a href="https://www.ctan.org/pkg/bibtex">BibTeX</a> entry type in case
+no “umbrella” citation like a paper or book exists for the project you want to
+make citable.</p>
+:ET

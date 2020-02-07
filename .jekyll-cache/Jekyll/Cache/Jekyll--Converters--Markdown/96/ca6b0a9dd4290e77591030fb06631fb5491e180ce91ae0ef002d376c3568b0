@@ -1,0 +1,134 @@
+I"%<p>In very simple terms, git branches are individual projects within a git repository. Different branches within a repository can have completely different files and folders, or it could have everything the same except for some lines of code in a file.</p>
+
+<p>Let’s use a few real world examples (at least that I’ve used before, others may have used them differently):</p>
+
+<ul>
+  <li>Pretend you have submitted a research article to a journal and they want you to revise it based on some reviewers comments. There are several ways to deal with the comments, so instead of changing your main manuscript, you create a revision branch in your manuscript git repository. In that branch you make the changes to your manuscript in response to the reviewers. Once you are satisfied, you merge the branch into the master branch and resubmit the article.</li>
+  <li>Imagine you have a dataset that multiple people are using. You want to update it with more data or you think you found a problem with the dataset, but aren’t sure. To update the dataset without messing the master dataset you create a new branch. After you confirm the problem is real and that you have the solution, you merge the branch with the master branch so people can use the new dataset.</li>
+  <li>You find a bug or a missing feature in a software. Because the software is already in production (fairly stable, other people rely on it, etc), you can’t just make changes to the main software code. So a hotfix or feature branch is created to address the problem, which will eventually get merged in with the master branch for the next version of the software. This ensures that other people’s code isn’t broken every time a bug gets fixed.</li>
+</ul>
+
+<blockquote class="callout">
+  <h2 id="how-it-works">How it works</h2>
+  <p>The nice (and very powerful) thing about Git is the fact that branches are very cheap compared to other version control systems. By cheap, I mean they don’t take up much disk space, it’s computationally easy to move between branches, and it’s (relatively) easy to merge branches together. This is because of how Git represents branches, since they are simply pointers or an individual commit. That’s it. Just a pointer. Git commit history is a directed acyclic graph, which means that every single commit always has a ‘parent’ commit (the previous commit in the history, or multiple parents when a merge happens), and any individual commit can have multiple ‘children’.
+This history can be traced back through the ‘lineage’ or ‘ancestry’. The branch just gives a name to each ‘lineage’ when a commit has multiple children.</p>
+</blockquote>
+
+<p>When you merge two branches together, the commit histories get merged together as well. Which means that all the changes you made in each branch gets combined back into a single lineage, rather than two. This makes it easier to work collaboratively on a project, since each individual could work on their own branches, without dealing with the messiness that could come from working all on one branch.</p>
+
+<h2 id="lets-start--create-a-new-branch">Let’s start : Create a new branch</h2>
+
+<p>Our <code class="highlighter-rouge">mars.txt</code> file</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">cat </span>mars.txt
+</code></pre></div></div>
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Cold and dry, but everything is my favorite color
+The two moons may be a problem for Wolfman
+But the Mummy will appreciate the lack of humidity
+An ill-considered change
+</code></pre></div></div>
+
+<p>Create a new branch named <code class="highlighter-rouge">rocket</code></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>git branch rocket
+</code></pre></div></div>
+
+<p>So far nothing really appends :</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>git status
+</code></pre></div></div>
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>On branch master
+nothing to commit, working tree clean
+</code></pre></div></div>
+
+<p>We need to change the branch</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>git checkout rocket
+</code></pre></div></div>
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Switched to branch 'rocket'
+</code></pre></div></div>
+
+<p>We can edit the <code class="highlighter-rouge">mars.txt</code> file and add something about the rocket project</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>nano mars.txt
+<span class="nv">$ </span><span class="nb">cat </span>mars.txt
+</code></pre></div></div>
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Cold and dry, but everything is my favorite color
+The two moons may be a problem for Wolfman
+But the Mummy will appreciate the lack of humidity
+An ill-considered change
+
+
+The project of rocket will need a spaceship and a motor
+Father might have the budget for it
+We need to also to move material and animals
+</code></pre></div></div>
+
+<p>Then we add and commit changes</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>git status
+</code></pre></div></div>
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>On branch rocket
+Changes not staged for commit:
+  (use "git add &lt;file&gt;..." to update what will be committed)
+  (use "git checkout -- &lt;file&gt;..." to discard changes in working directory)
+
+	modified:   mars.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+</code></pre></div></div>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>git add mars.txt
+<span class="nv">$ </span>git commit <span class="nt">-m</span> <span class="s2">"start the rocket project"</span>
+</code></pre></div></div>
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[rocket 468dd5c] start the rocket project
+ 1 file changed, 6 insertions(+)
+</code></pre></div></div>
+
+<p>This modification only affected the <code class="highlighter-rouge">rocket</code> branch if we go back to the <code class="highlighter-rouge">master</code> branch the <code class="highlighter-rouge">mars.txt</code> file is unchanged.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>git checkout master
+<span class="nv">$ </span><span class="nb">cat </span>mars.txt
+</code></pre></div></div>
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Cold and dry, but everything is my favorite color
+The two moons may be a problem for Wolfman
+But the Mummy will appreciate the lack of humidity
+An ill-considered change
+</code></pre></div></div>
+
+<p>Branches are useful tools for working on different version of a project and to switch back and forth to it.</p>
+
+<h2 id="merging-branch">Merging branch</h2>
+
+<p>Merging branches means to include the change of one branch to another.</p>
+
+<p>We go to the destination branch (<code class="highlighter-rouge">master</code>here)</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>git checkout master
+</code></pre></div></div>
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Switched to branch 'master'
+</code></pre></div></div>
+
+<p>And we merge <code class="highlighter-rouge">rocket</code>branch into it</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>git merge rocket
+</code></pre></div></div>
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Updating dbd9912..468dd5c
+Fast-forward
+ mars.txt | 6 ++++++
+ 1 file changed, 6 insertions(+)
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">mars.txt</code> changed</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">cat </span>mars.txt
+</code></pre></div></div>
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Cold and dry, but everything is my favorite color
+The two moons may be a problem for Wolfman
+But the Mummy will appreciate the lack of humidity
+An ill-considered change
+
+
+The project of rocket will need a spaceship and a motor
+Father might have the budget for it
+We need to also to move material and animals
+</code></pre></div></div>
+
+<p>you can delete the <code class="highlighter-rouge">rocker</code>branch</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>git branch <span class="nt">-D</span> rocket
+</code></pre></div></div>
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Deleted branch rocket (was 468dd5c).
+</code></pre></div></div>
+:ET

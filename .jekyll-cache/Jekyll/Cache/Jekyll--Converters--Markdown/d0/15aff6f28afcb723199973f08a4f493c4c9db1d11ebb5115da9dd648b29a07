@@ -1,0 +1,378 @@
+I"aM<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+
+<p>People often have questions about Git beyond the scope of the core material.
+Students who have completed the rest of the lessons might find value in looking through the following topics.</p>
+
+<p>Note that since this material isn’t essential for basic Git usage, it won’t be covered by the instructor.</p>
+
+<h2 id="more-advanced-git-configuration">More Advanced Git Configuration</h2>
+
+<p>In <a href="../02-setup/">Setting Up Git</a>,
+we used <code class="highlighter-rouge">git config --global</code> to set some default options for Git.
+It turns out that these configuration options get stored in your home directory
+in a plain text file called <code class="highlighter-rouge">.gitconfig</code>.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">cat</span> ~/.gitconfig
+</code></pre></div></div>
+
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[user]
+	name = Vlad Dracula
+	email = vlad@tran.sylvan.ia
+[color]
+	ui = true
+[core]
+	editor = nano
+</code></pre></div></div>
+
+<p>This file can be opened in your preferred text editor.
+(Note that it is recommended to continue using the <code class="highlighter-rouge">git config</code> command,
+as this helps avoid introducing syntax errors.)</p>
+
+<p>Eventually, you will want to start customizing Git’s behaviour.
+This can be done by adding more entries to your <code class="highlighter-rouge">.gitconfig</code>.
+The available options are described in the manual:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>git config <span class="nt">--help</span>
+</code></pre></div></div>
+
+<p>In particular, you might find it useful to add aliases.
+These are like shortcuts for longer Git commands.
+For example, if you get sick of typing <code class="highlighter-rouge">git checkout</code> all the time,
+you could run the command:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>git config <span class="nt">--global</span> alias.co checkout
+</code></pre></div></div>
+
+<p>Now if we return to the example from <a href="../05-history/">Exploring History</a> where we ran:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>git checkout f22b25e mars.txt
+</code></pre></div></div>
+
+<p>we could now instead type:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>git co f22b25e mars.txt
+</code></pre></div></div>
+
+<h2 id="styling-gits-log">Styling Git’s Log</h2>
+
+<p>A good target for customization is output from the log.
+The default log is quite verbose but gives no graphical hints
+such as information about which commits were done locally
+and which were pulled from remotes.</p>
+
+<p>You can use <code class="highlighter-rouge">git log --help</code> and <code class="highlighter-rouge">git config --help</code> to look for different ways to change
+the log output.
+Try the following commands and see what effect they have:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>git config <span class="nt">--global</span> alias.lg <span class="s2">"log --graph"</span>
+<span class="nv">$ </span>git config <span class="nt">--global</span> log.abbrevCommit <span class="nb">true</span>
+<span class="nv">$ </span>git config <span class="nt">--global</span> format.pretty oneline
+<span class="nv">$ </span>git lg
+</code></pre></div></div>
+
+<p>If you don’t like the effects,
+you can undo them with:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>git config <span class="nt">--global</span> <span class="nt">--unset</span> alias.lg
+<span class="nv">$ </span>git config <span class="nt">--global</span> <span class="nt">--unset</span> log.abbrevCommit
+<span class="nv">$ </span>git config <span class="nt">--global</span> <span class="nt">--unset</span> format.pretty
+</code></pre></div></div>
+
+<blockquote class="callout">
+  <h2 id="undoing-git-configuration-changes">Undoing Git Configuration Changes</h2>
+
+  <p>You can use the <code class="highlighter-rouge">--unset</code> flag to delete unwanted options from <code class="highlighter-rouge">.gitconfig</code>.
+Another way to roll back changes is to store your <code class="highlighter-rouge">.gitconfig</code> using Git.</p>
+
+  <p>For hints on what you might want to configure,
+go to GitHub and search for “gitconfig”.
+You will find hundreds of repositories in which people have stored
+their own Git configuration files.
+Sort them by the number of stars and have a look at the top few.
+If you find some you like,
+please check that they’re covered by an open source license before you clone them.</p>
+</blockquote>
+
+<h2 id="non-text-files">Non-text Files</h2>
+
+<p>Recall when we discussed <a href="../09-conflict/">Conflicts</a>
+there was a challenge that asked,
+“What does Git do
+when there is a conflict in an image or some other non-textual file
+that is stored in version control?”</p>
+
+<p>We will now revisit this in more detail.</p>
+
+<p>Many people want to version control non-text files, such as images, PDFs and Microsoft Office or LibreOffice documents.
+It is true that Git can handle these filetypes (which fall under the banner of “binary” file types).
+However, just because it <em>can</em> be done doesn’t mean it <em>should</em> be done.</p>
+
+<p>Much of Git’s magic comes from being able to do line-by-line comparisons (“diffs”) between files.
+This is generally easy for programming source code and marked up text.
+For non-text files, a diff can usually only detect that the files have changed
+but can’t say how or where.</p>
+
+<p>This has various impacts on Git’s performance and will make it difficult to
+compare different versions of your project.</p>
+
+<p>For a basic example to show the difference it makes,
+we’re going to go see what would have happened if Dracula had tried
+using outputs from a word processor instead of plain text.</p>
+
+<p>Create a new directory and go into it:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">mkdir </span>planets-nontext
+<span class="nv">$ </span><span class="nb">cd </span>planets-nontext
+</code></pre></div></div>
+
+<p>Use a program such as Microsoft Word or LibreOffice Writer to create a new document.
+Enter the same text that we began with before:</p>
+
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Cold and dry, but everything is my favorite color
+</code></pre></div></div>
+
+<p>Save the document into the <code class="highlighter-rouge">planets-nontext</code> directory with the name of <code class="highlighter-rouge">mars.doc</code>.
+Back in the terminal, run the usual commands for setting up a new Git repository:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>git init
+<span class="nv">$ </span>git add mars.doc
+<span class="nv">$ </span>git commit <span class="nt">-m</span> <span class="s2">"Starting to think about Mars"</span>
+</code></pre></div></div>
+
+<p>Then make the same changes to <code class="highlighter-rouge">mars.doc</code> that we (or Vlad) previously made to <code class="highlighter-rouge">mars.txt</code>.</p>
+
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Cold and dry, but everything is my favorite color
+The two moons may be a problem for Wolfman
+</code></pre></div></div>
+
+<p>Save and close the word processor.
+Now see what Git thinks of your changes:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>git diff
+</code></pre></div></div>
+
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gh">diff --git a/mars.doc b/mars.doc
+index 53a66fd..6e988e9 100644
+</span><span class="p">Binary files a/mars.doc and b/mars.doc differ
+</span></code></pre></div></div>
+
+<p>Compare this to the earlier <code class="highlighter-rouge">git diff</code> obtained when using text files:</p>
+
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gh">diff --git a/mars.txt b/mars.txt
+index df0654a..315bf3a 100644
+</span><span class="gd">--- a/mars.txt
+</span><span class="gi">+++ b/mars.txt
+</span><span class="p">@@ -1 +1,2 @@</span>
+ Cold and dry, but everything is my favorite color
+<span class="gi">+The two moons may be a problem for Wolfman
+</span></code></pre></div></div>
+
+<p>Notice how plain text files give a much more informative diff.
+You can see exactly which lines changed and what the changes were.</p>
+
+<p>An uninformative <code class="highlighter-rouge">git diff</code> is not the only consequence of using Git on binary files.
+However, most of the other problems boil down to whether or not a good diff is possible.</p>
+
+<p>This isn’t to say you should <em>never</em> use Git on binary files.
+A rule of thumb is that it’s OK if the binary file won’t change very often,
+and if it does change, you don’t care about merging in small differences between versions.</p>
+
+<p>We’ve already seen how a word processed report will fail this test.
+An example that passes the test is a logo for your organization or project.
+Even though a logo will be stored in a binary format such as <code class="highlighter-rouge">jpg</code> or <code class="highlighter-rouge">png</code>,
+you can expect it will remain fairly static through the lifetime of your repository.
+On the rare occasion that branding does change,
+you will probably just want to replace the logo completely rather than merge little differences in.</p>
+
+<h2 id="removing-a-file">Removing a File</h2>
+
+<p>Adding and modifying files are not the only actions one might take
+when working on a project.  It might be required to remove a file
+from the repository.</p>
+
+<p>Create a new file for the planet Nibiru:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">echo</span> <span class="s2">"This is another name for fake planet X"</span> <span class="o">&gt;</span> nibiru.txt
+</code></pre></div></div>
+
+<p>Now add to the repository like you have learned earlier:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>git add nibiru.txt
+<span class="nv">$ </span>git commit <span class="nt">-m</span> <span class="s1">'adding info on nibiru'</span>
+<span class="nv">$ </span>git status
+</code></pre></div></div>
+
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>On branch master
+nothing to commit, working directory clean
+</code></pre></div></div>
+
+<p>Nibiru is not a real planet.  That was a silly idea.  Let us remove
+it from the disk and let Git know about it:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>git <span class="nb">rm </span>nibiru.txt
+<span class="nv">$ </span>git status
+</code></pre></div></div>
+
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>On branch master
+Changes to be committed:
+   (use "git reset HEAD &lt;file&gt;..." to unstage)
+
+   deleted:    nibiru.txt
+
+</code></pre></div></div>
+
+<p>The change has been staged.  Now commit the removal, and remove the
+file from the repository itself.  Note that the file will be removed
+in the new commit.  The previous commit will still
+have the file, if you were to retrieve that specific commit.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>git commit <span class="nt">-m</span> <span class="s1">'Removing info on Nibiru.  It is not a real planet!'</span>
+</code></pre></div></div>
+
+<h2 id="removing-a-file-with-unix">Removing a File with Unix</h2>
+
+<p>Sometimes we might forget to remove the file through Git. If you removed the
+file with Unix <code class="highlighter-rouge">rm</code> instead of using <code class="highlighter-rouge">git rm</code>, no worries,
+Git is smart enough to notice the missing file. Let us recreate the file and
+commit it again.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">echo</span> <span class="s2">"This is another name for fake planet X"</span> <span class="o">&gt;</span> nibiru.txt
+<span class="nv">$ </span>git add nibiru.txt
+<span class="nv">$ </span>git commit <span class="nt">-m</span> <span class="s1">'adding nibiru again'</span>
+</code></pre></div></div>
+
+<p>Now we remove the file with Unix <code class="highlighter-rouge">rm</code>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">rm </span>nibiru.txt
+<span class="nv">$ </span>git status
+</code></pre></div></div>
+
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>On branch master
+Changes not staged for commit:
+   (use "git add/rm &lt;file&gt;..." to update what will be committed)
+   (use "git checkout -- &lt;file&gt;..." to discard changes in working directory)
+
+    deleted:    nibiru.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+</code></pre></div></div>
+
+<p>See how Git has noticed that the file <code class="highlighter-rouge">nibiru.txt</code> has been removed
+from the disk.  The next step is to “stage” the removal of the file
+from the repository.  This is done with the command <code class="highlighter-rouge">git rm</code> just as
+before.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>git <span class="nb">rm </span>nibiru.txt
+<span class="nv">$ </span>git status
+</code></pre></div></div>
+
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>On branch master
+Changes to be committed:
+   (use "git reset HEAD &lt;file&gt;..." to unstage)
+
+   deleted:    nibiru.txt
+
+</code></pre></div></div>
+
+<p>The change that was made in Unix has now been staged and needs to be
+committed.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>git commit <span class="nt">-m</span> <span class="s1">'Removing info on Nibiru, again!'</span>
+</code></pre></div></div>
+
+<h2 id="renaming-a-file">Renaming a File</h2>
+
+<p>Another common change when working on a project is to rename a file.</p>
+
+<p>Create a file for the planet Krypton:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">echo</span> <span class="s2">"Superman's home planet"</span> <span class="o">&gt;</span> krypton.txt
+</code></pre></div></div>
+
+<p>Add it to the repository:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>git add krypton.txt
+<span class="nv">$ </span>git commit <span class="nt">-m</span> <span class="s1">'Adding planet Krypton'</span>
+</code></pre></div></div>
+
+<p>We all know that Superman moved to Earth.  Not that he had much
+choice.  Now his home planet is Earth.</p>
+
+<p>Rename the file <code class="highlighter-rouge">krypton.txt</code> to <code class="highlighter-rouge">earth.txt</code> with Git:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>git <span class="nb">mv </span>krypton.txt earth.txt
+<span class="nv">$ </span>git status
+</code></pre></div></div>
+
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code># On branch master
+# Changes to be committed:
+#   (use "git reset HEAD &lt;file&gt;..." to unstage)
+#
+#	renamed:    krypton.txt -&gt; earth.txt
+#
+</code></pre></div></div>
+<p>The final step is commit our change to the repository:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>git commit <span class="nt">-m</span> <span class="s1">'Superman'</span>s home is now Earth<span class="s1">'
+</span></code></pre></div></div>
+
+<h2 id="renaming-a-file-with-unix">Renaming a File with Unix</h2>
+
+<p>If you forgot to use Git and you used Unix <code class="highlighter-rouge">mv</code> instead
+of <code class="highlighter-rouge">git mv</code>, you will have a touch more work to do but Git will
+be able to deal with it. Let’s try again renaming the file,
+this time with Unix <code class="highlighter-rouge">mv</code>. First, we need to recreate the
+<code class="highlighter-rouge">krypton.txt</code> file:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">echo</span> <span class="s2">"Superman's home planet"</span> <span class="o">&gt;</span> krypton.txt
+<span class="nv">$ </span>git add krypton.txt
+<span class="nv">$ </span>git commit <span class="nt">-m</span> <span class="s1">'Adding planet Krypton again.'</span>
+</code></pre></div></div>
+
+<p>Let us rename the file and see what Git can figured out by itself:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">mv </span>krypton.txt earth.txt
+<span class="nv">$ </span>git status
+</code></pre></div></div>
+
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>On branch master
+Changes not staged for commit:
+  (use "git add/rm &lt;file&gt;..." to update what will be committed)
+  (use "git checkout -- &lt;file&gt;..." to discard changes in working directory)
+
+        deleted:    krypton.txt
+
+Untracked files:
+  (use "git add &lt;file&gt;..." to include in what will be committed)
+
+    earth.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+</code></pre></div></div>
+
+<p>Git has noticed that the file <code class="highlighter-rouge">krypton.txt</code> has disappeared from the
+file system and a new file <code class="highlighter-rouge">earth.txt</code> has showed up.</p>
+
+<p>Add those changes to the staging area:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>git add krypton.txt earth.txt
+<span class="nv">$ </span>git status
+</code></pre></div></div>
+
+<div class="output highlighter-rouge"><div class="highlight"><pre class="highlight"><code>On branch master
+Changes to be committed:
+  (use "git reset HEAD &lt;file&gt;..." to unstage)
+
+    renamed:    krypton.txt -&gt; earth.txt
+
+</code></pre></div></div>
+
+<p>Notice how Git has now figure out that the <code class="highlighter-rouge">krypton.txt</code> has not
+disappeared it has simply been renamed.</p>
+
+<p>The final step, as before, is to commit our change to the repository:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>git commit <span class="nt">-m</span> <span class="s1">'Superman'</span>s home is Earth, told you before.<span class="s1">'
+</span></code></pre></div></div>
+
+:ET
